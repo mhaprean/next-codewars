@@ -13,11 +13,11 @@ const Navigation = () => {
     <div className="w-full fixed top-0 left-0 border-b gap-2 p-2 font-semibold bg-slate-50 z-30 flex items-center">
       <Logo />
 
-      <button onClick={registerModal.onOpen} className="p-2 bg-blue-300 rounded-md ml-auto">
-        SIGN UP
+      <button onClick={registerModal.onOpen} className="p-2 bg-[#bb432c] rounded-md ml-auto text-slate-100">
+        Register
       </button>
 
-      <button onClick={loginModal.onOpen} className="p-2 bg-blue-300 rounded-md">
+      <button onClick={loginModal.onOpen} className="p-2 bg-[#bb432c] rounded-md text-slate-100">
         Login
       </button>
 

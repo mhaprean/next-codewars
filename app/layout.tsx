@@ -25,8 +25,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <LoginModal />
           <Navigation />
         </ClientOnly>
-
-        {children}
+        <main className="flex min-h-screen  flex-col items-center justify-between px-4 pt-[70px]">
+          <div className="z-10 w-full items-center justify-between text-sm lg:flex">{children}</div>
+        </main>
       </body>
     </html>
   );
