@@ -7,6 +7,7 @@ import useLoginModal from '../hooks/useLoginModal';
 
 import { signOut } from 'next-auth/react';
 import { ISafeUser } from '../types';
+import Avatar from './ui/Avatar';
 
 interface IPropsNavigation {
   currentUser?: ISafeUser | null;
@@ -33,13 +34,12 @@ const Navigation = ({ currentUser }: IPropsNavigation) => {
       ) : (
         <>
           <p className="text-blue-500 ml-auto">{currentUser.name}</p>
+          <Avatar src={currentUser?.image || ''} />
           <button className="border" onClick={() => signOut()}>
             Logout
           </button>
         </>
       )}
-
-      {/* <Modal isOpen actionLabel='my modal here' /> */}
     </div>
   );
 };
