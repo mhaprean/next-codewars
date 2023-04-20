@@ -7,6 +7,7 @@ import './globals.css';
 import { Nunito } from 'next/font/google';
 import ToasterProvider from './providers/ToasterProvider';
 import LoginModal from './components/modals/LoginModal';
+import getCurrentUser from './actions/getCurrentUser';
 
 const font = Nunito({ subsets: ['latin'] });
 
@@ -15,7 +16,10 @@ export const metadata = {
   description: 'App build with next 13, tailwind, prisma',
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+
+  const currentUser = await getCurrentUser();
+
   return (
     <html lang="en">
       <body className={font.className}>
@@ -23,7 +27,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <ToasterProvider />
           <RegisterModal />
           <LoginModal />
-          <Navigation />
+          <Navigation currentUser={currentUser} />
         </ClientOnly>
         <main className="flex min-h-screen  flex-col items-center justify-between px-4 pt-[70px]">
           <div className="z-10 w-full items-center justify-between text-sm lg:flex">{children}</div>
