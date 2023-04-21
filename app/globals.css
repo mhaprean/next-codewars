@@ -8,6 +8,12 @@ body,
   height: 100%;
 }
 
+@layer base {
+  body {
+    @apply dark:bg-gray-800 bg-white text-gray-800 dark:text-white;
+  }
+}
+
 .gutter {
   background-color: #e5e7eb;
   background-repeat: no-repeat;
@@ -16,15 +22,14 @@ body,
 }
 
 .gutter.gutter-horizontal {
-  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAeCAYAAADkftS9AAAAIklEQVQoU2M4c+bMfxAGAgYYmwGrIIiDjrELjpo5aiZeMwF+yNnOs5KSvgAAAABJRU5ErkJggg==');
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAeCAYAAADkftS9AAAAIklEQVQoU2M4c+bMfxAGAgYYmwGrIIiDjrELjpo5aiZeMwF+yNnOs5KSvgAAAABJRU5ErkJggg==");
   cursor: col-resize;
 }
 
 .gutter.gutter-vertical {
-  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAFAQMAAABo7865AAAABlBMVEVHcEzMzMzyAv2sAAAAAXRSTlMAQObYZgAAABBJREFUeF5jOAMEEAIEEFwAn3kMwcB6I2AAAAAASUVORK5CYII=');
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAFAQMAAABo7865AAAABlBMVEVHcEzMzMzyAv2sAAAAAXRSTlMAQObYZgAAABBJREFUeF5jOAMEEAIEEFwAn3kMwcB6I2AAAAAASUVORK5CYII=");
   cursor: row-resize;
 }
-
 
 .prose {
   max-width: 100%;
@@ -35,7 +40,7 @@ body,
 }
 
 .CodeMirror {
-  font-family: 'Roboto Mono', monospace;
+  font-family: "Roboto Mono", monospace;
   height: auto;
   border: 1px solid #e2e8f0;
   border-radius: 0.375rem;

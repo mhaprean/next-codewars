@@ -1,13 +1,13 @@
 import ClientOnly from './components/ClientOnly';
-import Navigation from './components/Navigation';
+import Navigation from './components/navigation/Navigation';
 import RegisterModal from './components/modals/RegisterModal';
 
 import './globals.css';
 
 import { Nunito } from 'next/font/google';
-import ToasterProvider from './providers/ToasterProvider';
 import LoginModal from './components/modals/LoginModal';
 import getCurrentUser from './actions/getCurrentUser';
+import Providers from './providers/Providers';
 
 const font = Nunito({ subsets: ['latin'] });
 
@@ -17,21 +17,22 @@ export const metadata = {
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-
   const currentUser = await getCurrentUser();
 
   return (
     <html lang="en">
       <body className={font.className}>
         <ClientOnly>
-          <ToasterProvider />
-          <RegisterModal />
-          <LoginModal />
-          <Navigation currentUser={currentUser} />
+          <Providers>
+            <RegisterModal />
+            <LoginModal />
+            <Navigation currentUser={currentUser} />
+
+            <main className="flex min-h-screen  flex-col items-center justify-between px-4 pt-[70px]">
+              <div className="z-10 w-full items-center justify-between text-sm lg:flex">{children}</div>
+            </main>
+          </Providers>
         </ClientOnly>
-        <main className="flex min-h-screen  flex-col items-center justify-between px-4 pt-[70px]">
-          <div className="z-10 w-full items-center justify-between text-sm lg:flex">{children}</div>
-        </main>
       </body>
     </html>
   );
