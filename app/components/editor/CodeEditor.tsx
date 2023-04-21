@@ -3,7 +3,7 @@
 import AceEditor from 'react-ace';
 
 import 'ace-builds/src-noconflict/mode-javascript';
-import 'ace-builds/src-noconflict/theme-twilight';
+import 'ace-builds/src-noconflict/theme-monokai';
 import 'ace-builds/src-noconflict/ext-language_tools';
 import { useState } from 'react';
 
@@ -26,7 +26,7 @@ const CodeEditor = ({ value, onChange }: IPropsCodeEditor) => {
       className="w-full h-full overflow-y-auto"
       value={value}
       mode="javascript"
-      theme="twilight"
+      theme="monokai"
       fontSize={16}
       tabSize={2}
       onChange={handleChange}

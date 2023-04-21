@@ -35,9 +35,9 @@ const Navigation = ({ currentUser }: IPropsNavigation) => {
           </>
         ) : (
           <>
-            <p className="text-blue-500">{currentUser.name}</p>
+            <p className="text-primary">{currentUser.name}</p>
             <Avatar src={currentUser?.image || ''} />
-            <button className="border" onClick={() => signOut()}>
+            <button className="border px-2 py-1 rounded-md border-gray-600" onClick={() => signOut()}>
               Logout
             </button>
           </>
