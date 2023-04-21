@@ -22,6 +22,7 @@ const Input = ({ id, label, type = 'text', disabled, formatPrice, register, requ
           size={24}
           className="
             text-neutral-700
+            dark:text-neutral-700
             absolute
             top-5
             left-2
@@ -40,6 +41,7 @@ const Input = ({ id, label, type = 'text', disabled, formatPrice, register, requ
           p-4
           pt-6 
           font-light 
+          text-neutral-700
           bg-white 
           border-2
           rounded-md

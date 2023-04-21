@@ -81,7 +81,7 @@ const Modal = ({
           z-50 
           outline-none 
           focus:outline-none
-          bg-neutral-800/70
+          bg-gray-900/40
         "
       >
         <div
@@ -102,9 +102,9 @@ const Modal = ({
           <div
             className={`
             translate
-            duration-300
+            duration-200
             h-full
-            ${showModal ? 'translate-y-0' : 'translate-y-full'}
+            ${showModal ? 'translate-y-0' : 'translate-y-[-500px]'}
             ${showModal ? 'opacity-100' : 'opacity-0'}
           `}
           >
@@ -123,7 +123,7 @@ const Modal = ({
               flex-col 
               w-full 
               bg-white
-              dark:bg-gray-600
+              dark:bg-gray-800
               outline-none 
               focus:outline-none
             "
