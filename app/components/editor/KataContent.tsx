@@ -116,13 +116,13 @@ describe("solution", function(){
   const [tests, setTests] = useState(testsCode);
 
   return (
-    <Split direction="horizontal" className="flex" style={{ height: `calc(100vh - 60px)` }}>
+    <Split direction="horizontal" className="flex pr-4" style={{ height: `calc(100vh - 60px)` }}>
       <div className="bg-slate-100 dark:bg-gray-800 overflow-y-auto max-h-[100%]">
         <div className="max-w-7xl mx-auto px-4 md:px-6 py-8">
           <div className="max-w-3xl mx-auto">
             <h1 className="text-2xl font-bold">Integer to Roman</h1>
             <div className="flex items-center gap-2 my-4">
-              <span className="bg-orange-500/30 rounded-full px-2 py-1 text-orange-400">Medium</span>
+              <span className="bg-orange-500/30 rounded-full px-3 py-1 text-orange-400">Medium</span>
 
               <button className="text-yellow-400 hover:bg-gray-700 duration-200 transition-all rounded-md p-1 w-8 h-8">
                 <TiStarOutline className="w-full h-full" />

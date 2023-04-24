@@ -15,10 +15,11 @@ body,
 }
 
 .gutter {
-  background-color: #e5e7eb;
+
+
+  @apply bg-gray-200 dark:bg-gray-900 hover:bg-gray-400 dark:hover:bg-gray-700;
   background-repeat: no-repeat;
   background-position: 50%;
-  transition: all 0.2s ease-in-out;
 }
 
 .gutter.gutter-horizontal {

@@ -81,7 +81,7 @@ const Modal = ({
           z-50 
           outline-none 
           focus:outline-none
-          bg-gray-900/40
+          bg-black/80
         "
       >
         <div
