@@ -29,8 +29,9 @@ const KataOutput = ({ error, message }: IPropsKataOutput) => {
         </div>
       )}
 
-      <div className="border p-2 border-gray-400">
-        <pre className="whitespace-pre-wrap">{message}</pre>
+      <div className="border border-green-800 rounded-md bg-green-600/20
+                  text-green-900 dark:text-gray-100 my-4 p-4 text-lg">
+        <pre className="whitespace-pre-wrap text-green-950 dark:text-gray-100">{message}</pre>
       </div>
     </div>
   );

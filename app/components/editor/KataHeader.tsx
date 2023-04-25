@@ -3,14 +3,10 @@
 import { TiStarOutline, TiStarFullOutline } from 'react-icons/ti';
 import { RiShareForward2Fill } from 'react-icons/ri';
 import { useState } from 'react';
-import classNames from 'classnames';
 
-interface IPropsKataHeader {
-  onTabChange: (newTab: string) => void;
-  activeTab: string;
-}
+interface IPropsKataHeader {}
 
-const KataHeader = ({ onTabChange, activeTab }: IPropsKataHeader) => {
+const KataHeader = (props: IPropsKataHeader) => {
   const [fav, setFav] = useState(false);
 
   const toggleFavorite = () => {
@@ -29,26 +25,6 @@ const KataHeader = ({ onTabChange, activeTab }: IPropsKataHeader) => {
 
         <button className="text-gray-500 hover:bg-gray-700 duration-200 transition-all rounded-md p-1 w-8 h-8">
           <RiShareForward2Fill className="w-full h-full" />
-        </button>
-      </div>
-
-      <div className="flex items-center gap-2">
-        <button
-          onClick={() => onTabChange('instructions')}
-          className={classNames('rounded-md py-2 px-3  ', 'hover:bg-gray-200 dark:hover:bg-gray-700/90', 'transition-all duration-200', {
-            'bg-gray-300 dark:bg-gray-700': activeTab === 'instructions',
-          })}
-        >
-          Instructions
-        </button>
-
-        <button
-          onClick={() => onTabChange('output')}
-          className={classNames('rounded-md py-2 px-3  ', 'hover:bg-gray-200 dark:hover:bg-gray-700/90', 'transition-all duration-200', {
-            'bg-gray-300 dark:bg-gray-700': activeTab === 'output',
-          })}
-        >
-          Output
         </button>
       </div>
     </div>

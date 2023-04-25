@@ -12,6 +12,8 @@ import katas from '@/app/helpers/katas';
 
 import chai from 'chai';
 import KataHeader from './KataHeader';
+import classNames from 'classnames';
+import KataOutput from './KataOutput';
 const assert = chai.assert;
 
 const { initialCode, testsCode, content2 } = katas;
@@ -45,7 +47,6 @@ const extractFunction = (code: string) => {
 const KataContent = () => {
   const fullScreen = useFullScreenHandle();
 
-
   const [activeTab, setActiveTab] = useState('instructions');
 
   const [code, setCode] = useState(initialCode);
@@ -69,6 +70,7 @@ const KataContent = () => {
       // Run some basic tests to provide initial feedback to the user
       const testResult = runBasicTests(fn);
       setOutput(testResult);
+      setError({ actual: '', expected: '', message: '' });
     } catch (error) {
       console.log('!!! error ', error);
 
@@ -80,10 +82,11 @@ const KataContent = () => {
       Actual: ${err && err.actual ? err.actual : ''}
       `;
 
-      setOutput(result);
+      setOutput('');
 
       setError({ actual: err.actual, expected: err.expected, message: err.message });
     }
+    setActiveTab('output');
   };
 
   const runBasicTests = (solution: Function) => {
@@ -104,6 +107,7 @@ const KataContent = () => {
     } catch (error) {
       const err = error as unknown as IErr;
       console.error(error);
+      console.log('DDDDDDD error ', error);
       result = 'Basic tests failed: ' + JSON.stringify((error as any).message);
       setError({ actual: err.actual, expected: err.expected, message: err.message });
     }
@@ -123,21 +127,58 @@ const KataContent = () => {
       <Split
         sizes={[40, 60]}
         direction="horizontal"
-        className="flex pr-4"
+        className="flex"
         style={{ height: fullScreen.active ? '100vh' : `calc(100vh - 60px)` }}
       >
         <div className="bg-slate-100 dark:bg-gray-800 min-w-[250px]">
-          <div className="flex flex-col h-[150px] p-4">
-            <KataHeader activeTab={activeTab} onTabChange={setActiveTab} />
-          </div>
-          <div className="max-w-7xl mx-auto px-4 md:px-6 py-8 h-[calc(100%-150px)] overflow-y-auto">
-            <div className="max-w-3xl mx-auto"></div>
+          <div className="flex items-center h-[60px] flex-shrink-0 px-2 bg-gray-200 dark:bg-gray-900">
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setActiveTab('instructions')}
+                className={classNames(
+                  'rounded-md py-2 px-3  ',
+                  'hover:bg-gray-200 dark:hover:bg-gray-700/90',
+                  'transition-all duration-200',
+                  {
+                    'bg-gray-300 dark:bg-gray-700': activeTab === 'instructions',
+                  }
+                )}
+              >
+                Instructions
+              </button>
 
-            <KataInstructions content={content2} />
+              <button
+                onClick={() => setActiveTab('output')}
+                className={classNames(
+                  'rounded-md py-2 px-3  ',
+                  'hover:bg-gray-200 dark:hover:bg-gray-700/90',
+                  'transition-all duration-200',
+                  {
+                    'bg-gray-300 dark:bg-gray-700': activeTab === 'output',
+                  }
+                )}
+              >
+                Output
+              </button>
+            </div>
+          </div>
+
+          <div className="max-w-7xl mx-auto px-4 md:px-6 py-8 h-[calc(100%-60px)] overflow-y-auto">
+            {activeTab === 'output' && (
+              <div className="max-w-3xl mx-auto">
+                <KataOutput error={error} message={output} />
+              </div>
+            )}
+            {activeTab === 'instructions' && (
+              <div className="max-w-3xl mx-auto">
+                <KataHeader />
+                <KataInstructions content={content2} />
+              </div>
+            )}
           </div>
         </div>
         <div className="flex flex-col flex-grow">
-          <div className="flex items-center p-2">
+          <div className="flex items-center h-[60px] flex-shrink-0 px-2 bg-gray-200 dark:bg-gray-900">
             <button className="px-3 py-2 flex items-center gap-1 text-gray-700 dark:text-gray-400 border rounded-md mr-auto">
               <FaNodeJs />
               Javascript
@@ -162,7 +203,7 @@ const KataContent = () => {
               <CodeEditor value={tests} onChange={setTests} />
             </div>
           </Split>
-          <div className="flex items-center px-2 py-4 gap-2">
+          <div className="flex items-center px-2 py-4 gap-2 bg-gray-200 dark:bg-gray-900">
             <button
               className="px-3 py-2 border 
             flex items-center gap-1
@@ -184,7 +225,6 @@ const KataContent = () => {
 
             <button
               onClick={runTests}
-              // onClick={handleButtonClick}
               className="px-3 py-2 border border-primary text-primary  dark:text-gray-100
               bg-primary/10 dark:bg-primary/5
             rounded-md hover:opacity-80 ml-auto"
