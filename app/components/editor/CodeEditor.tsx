@@ -6,6 +6,11 @@ import 'ace-builds/src-noconflict/mode-javascript';
 import 'ace-builds/src-noconflict/theme-monokai';
 import 'ace-builds/src-noconflict/ext-language_tools';
 
+import 'ace-builds/src-noconflict/snippets/javascript';
+import 'ace-builds/src-noconflict/ext-static_highlight';
+import 'ace-builds/src-noconflict/ext-prompt';
+import 'ace-builds/src-noconflict/ext-inline_autocomplete';
+
 interface IPropsCodeEditor {
   value: string;
   onChange: (newValue: string) => void;
@@ -28,7 +33,13 @@ const CodeEditor = ({ value, onChange }: IPropsCodeEditor) => {
       onChange={handleChange}
       editorProps={{ $blockScrolling: true }}
       style={{ width: '100%', height: '100%', overflowY: 'auto' }}
-      setOptions={{ useWorker: false }}
+      setOptions={{
+        useWorker: false,
+        enableBasicAutocompletion: true,
+        enableSnippets: true,
+        enableLiveAutocompletion: false,
+        spellcheck: true,
+      }}
     />
   );
 };
