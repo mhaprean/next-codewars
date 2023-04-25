@@ -3,7 +3,7 @@
 import AceEditor from 'react-ace';
 
 import 'ace-builds/src-noconflict/mode-javascript';
-import 'ace-builds/src-noconflict/theme-monokai';
+import 'ace-builds/src-noconflict/theme-one_dark';
 import 'ace-builds/src-noconflict/ext-language_tools';
 
 import 'ace-builds/src-noconflict/snippets/javascript';
@@ -27,7 +27,7 @@ const CodeEditor = ({ value, onChange }: IPropsCodeEditor) => {
       className="w-full h-full overflow-y-auto"
       value={value}
       mode="javascript"
-      theme="monokai"
+      theme="one_dark"
       fontSize={16}
       tabSize={2}
       onChange={handleChange}
@@ -37,8 +37,9 @@ const CodeEditor = ({ value, onChange }: IPropsCodeEditor) => {
         useWorker: false,
         enableBasicAutocompletion: true,
         enableSnippets: true,
-        enableLiveAutocompletion: false,
+        enableLiveAutocompletion: true,
         spellcheck: true,
+        showPrintMargin: false,
       }}
     />
   );

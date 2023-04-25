@@ -6,13 +6,12 @@ import KataInstructions from './KataInstructions';
 import CodeEditor from './CodeEditor';
 import { useState } from 'react';
 import { FaRegComments, FaUnlockAlt, FaNodeJs } from 'react-icons/fa';
-import { TiStarOutline, TiStarFullOutline } from 'react-icons/ti';
-import { RiShareForward2Fill } from 'react-icons/ri';
 import { FiSettings } from 'react-icons/fi';
 import { CgExpand } from 'react-icons/cg';
 import katas from '@/app/helpers/katas';
 
 import chai from 'chai';
+import KataHeader from './KataHeader';
 const assert = chai.assert;
 
 const { initialCode, testsCode, content2 } = katas;
@@ -46,9 +45,11 @@ const extractFunction = (code: string) => {
 const KataContent = () => {
   const fullScreen = useFullScreenHandle();
 
+
+  const [activeTab, setActiveTab] = useState('instructions');
+
   const [code, setCode] = useState(initialCode);
   const [tests, setTests] = useState(testsCode);
-  const [fav, setFav] = useState(false);
 
   const [output, setOutput] = useState('');
   const [error, setError] = useState<IErr>({ actual: '', expected: '', message: '' });
@@ -117,10 +118,6 @@ const KataContent = () => {
     }
   };
 
-  const toggleFavorite = () => {
-    setFav((prev) => !prev);
-  };
-
   return (
     <FullScreen handle={fullScreen}>
       <Split
@@ -129,47 +126,14 @@ const KataContent = () => {
         className="flex pr-4"
         style={{ height: fullScreen.active ? '100vh' : `calc(100vh - 60px)` }}
       >
-        <div className="bg-slate-100 dark:bg-gray-800 overflow-y-auto max-h-[100%]">
-          <div className="max-w-7xl mx-auto px-4 md:px-6 py-8">
-            <div className="max-w-3xl mx-auto">
-              {error.message.length > 0 && (
-                <div
-                  className="border border-red-700 rounded-md bg-red-600/20
-                  text-gray-800 dark:text-gray-100 my-4 p-4 text-lg
-                  "
-                >
-                  <p className="text-red-950 dark:text-red-100 font-semibold text-md mb-4">{error.message}</p>
+        <div className="bg-slate-100 dark:bg-gray-800 min-w-[250px]">
+          <div className="flex flex-col h-[150px] p-4">
+            <KataHeader activeTab={activeTab} onTabChange={setActiveTab} />
+          </div>
+          <div className="max-w-7xl mx-auto px-4 md:px-6 py-8 h-[calc(100%-150px)] overflow-y-auto">
+            <div className="max-w-3xl mx-auto"></div>
 
-                  <p className="my-2">
-                    Expected: <span className="font-bold"> {error.expected}</span>
-                  </p>
-                  <p className="my-2">
-                    Actual: <span className="font-bold"> {error.actual}</span>
-                  </p>
-                </div>
-              )}
-
-              <div className="border p-2 border-gray-400">
-                <pre className="whitespace-pre-wrap">{output}</pre>
-              </div>
-
-              <h1 className="text-2xl font-bold">Integer to Roman</h1>
-              <div className="flex items-center gap-2 my-4">
-                <span className="bg-orange-500/30 rounded-full px-3 py-1 text-orange-600 dark:text-orange-400">Medium</span>
-
-                <button
-                  onClick={toggleFavorite}
-                  className="text-yellow-400 hover:bg-gray-700 duration-200 transition-all rounded-md p-1 w-8 h-8"
-                >
-                  {fav ? <TiStarFullOutline className="w-full h-full" /> : <TiStarOutline className="w-full h-full" />}
-                </button>
-
-                <button className="text-gray-500 hover:bg-gray-700 duration-200 transition-all rounded-md p-1 w-8 h-8">
-                  <RiShareForward2Fill className="w-full h-full" />
-                </button>
-              </div>
-              <KataInstructions content={content2} />
-            </div>
+            <KataInstructions content={content2} />
           </div>
         </div>
         <div className="flex flex-col flex-grow">
