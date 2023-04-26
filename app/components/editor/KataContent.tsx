@@ -130,8 +130,8 @@ const KataContent = () => {
         className="flex"
         style={{ height: fullScreen.active ? '100vh' : `calc(100vh - 60px)` }}
       >
-        <div className="bg-slate-100 dark:bg-gray-800 min-w-[250px]">
-          <div className="flex items-center h-[60px] flex-shrink-0 px-2 bg-gray-200 dark:bg-gray-900">
+        <div className=" min-w-[250px]">
+          <div className="flex items-center h-[60px] flex-shrink-0 px-2 bg-gray-200 dark:bg-gray-900 pl-2 md:pl-4">
             <div className="flex items-center gap-2">
               <button
                 onClick={() => setActiveTab('instructions')}
@@ -163,7 +163,7 @@ const KataContent = () => {
             </div>
           </div>
 
-          <div className="max-w-7xl mx-auto px-4 md:px-6 py-8 h-[calc(100%-60px)] overflow-y-auto">
+          <div className="bg-slate-100 dark:bg-gray-800 max-w-7xl mx-auto px-4 md:px-6 py-8 h-[calc(100%-60px)] overflow-y-auto ml-2 md:ml-4">
             {activeTab === 'output' && (
               <div className="max-w-3xl mx-auto">
                 <KataOutput error={error} message={output} />
@@ -177,20 +177,20 @@ const KataContent = () => {
             )}
           </div>
         </div>
-        <div className="flex flex-col flex-grow">
+        <div className="flex flex-col flex-grow pr-2 md:pr-4">
           <div className="flex items-center h-[60px] flex-shrink-0 px-2 bg-gray-200 dark:bg-gray-900">
             <button className="px-3 py-2 flex items-center gap-1 text-gray-700 dark:text-gray-400 border rounded-md mr-auto">
               <FaNodeJs />
               Javascript
             </button>
 
-            <button className="text-gray-500 hover:bg-gray-700 duration-200 transition-all rounded-md p-1 w-8 h-8">
+            <button className="text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-700 duration-200 transition-all rounded-md p-1 w-8 h-8">
               <FiSettings className="w-full h-full" />
             </button>
 
             <button
               onClick={toggleFullScreen}
-              className="text-gray-500 hover:bg-gray-700 duration-200 transition-all rounded-md p-1 w-8 h-8"
+              className="text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-700 duration-200 transition-all rounded-md p-1 w-8 h-8"
             >
               <CgExpand className="w-full h-full" />
             </button>
