@@ -14,9 +14,10 @@ import 'ace-builds/src-noconflict/ext-inline_autocomplete';
 interface IPropsCodeEditor {
   value: string;
   onChange: (newValue: string) => void;
+  fontSize?: string;
 }
 
-const CodeEditor = ({ value, onChange }: IPropsCodeEditor) => {
+const CodeEditor = ({ value, onChange, fontSize = '16px' }: IPropsCodeEditor) => {
   const handleChange = (newValue: string) => {
     console.log('change', newValue);
     onChange(newValue);
@@ -28,7 +29,7 @@ const CodeEditor = ({ value, onChange }: IPropsCodeEditor) => {
       value={value}
       mode="javascript"
       theme="one_dark"
-      fontSize={16}
+      fontSize={fontSize}
       tabSize={2}
       onChange={handleChange}
       editorProps={{ $blockScrolling: true }}

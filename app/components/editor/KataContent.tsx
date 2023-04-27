@@ -14,6 +14,7 @@ import chai from 'chai';
 import KataHeader from './KataHeader';
 import classNames from 'classnames';
 import KataOutput from './KataOutput';
+import FontsizeDropdown from './FontsizeDropdown';
 const assert = chai.assert;
 
 const { initialCode, testsCode, content2 } = katas;
@@ -48,6 +49,8 @@ const KataContent = () => {
   const fullScreen = useFullScreenHandle();
 
   const [activeTab, setActiveTab] = useState('instructions');
+
+  const [fontSize, setFontSize] = useState('16px');
 
   const [code, setCode] = useState(initialCode);
   const [tests, setTests] = useState(testsCode);
@@ -184,9 +187,7 @@ const KataContent = () => {
               Javascript
             </button>
 
-            <button className="text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-700 duration-200 transition-all rounded-md p-1 w-8 h-8">
-              <FiSettings className="w-full h-full" />
-            </button>
+            <FontsizeDropdown fontSize={fontSize} onChange={setFontSize} />
 
             <button
               onClick={toggleFullScreen}
@@ -197,10 +198,10 @@ const KataContent = () => {
           </div>
           <Split className="flex flex-col h-full" direction="vertical" sizes={[70, 30]}>
             <div className="bg-gray-300 dark:bg-gray-800 flex-grow overflow-y-auto">
-              <CodeEditor value={code} onChange={setCode} />
+              <CodeEditor value={code} onChange={setCode} fontSize={fontSize} />
             </div>
             <div className="bg-gray-300 dark:bg-gray-800 overflow-y-auto">
-              <CodeEditor value={tests} onChange={setTests} />
+              <CodeEditor value={tests} onChange={setTests} fontSize={fontSize} />
             </div>
           </Split>
           <div className="flex items-center px-2 py-4 gap-2 bg-gray-200 dark:bg-gray-900">

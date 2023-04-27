@@ -31,7 +31,7 @@ const UserDropdown = ({ currentUser }: IUserDropdown) => {
           <Avatar src={currentUser.image} />
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56 bg-gray-100 dark:bg-gray-600 mr-2 border-gray-200 dark:border-gray-700">
+      <DropdownMenuContent className="w-56 bg-gray-100 dark:bg-gray-600 mx-2 border-gray-200 dark:border-gray-700">
         <div className="flex items-center gap-2 py-2 px-1">
           <Avatar src={currentUser.image} /> <span>{currentUser.name}</span>
         </div>
