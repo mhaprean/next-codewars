@@ -11,7 +11,7 @@ const Logo = () => {
     <Link href={'/'} className="flex-shrink-0 flex items-center gap-2">
       <Image alt="Logo" className="cursor-pointer w-10 h-10" height={'40'} width={'40'} src={'/codewars-logo.png'} />
 
-      <span className="font-bold hidden sm:block">CodeWars</span>
+      <span className="font-bold hidden sm:block text-gray-600 dark:text-gray-100">CodeWars</span>
     </Link>
   );
 };
