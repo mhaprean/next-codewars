@@ -1,5 +1,3 @@
-import { SelectGroup } from '@radix-ui/react-select';
-import { Select, SelectContent, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '../ui/Select';
 import { FiSettings } from 'react-icons/fi';
 import {
   DropdownMenu,
