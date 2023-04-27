@@ -77,12 +77,19 @@ const Modal = ({
           overflow-x-hidden 
           overflow-y-auto 
           fixed 
-          inset-0 
+          inset-0
+          top-0
+          left-0
+          h-screen
+          w-screen
           z-50 
           outline-none 
           focus:outline-none
-          bg-black/80
+          bg-gray-500/70
+          dark:bg-black/60
+          backdrop-blur-sm
         "
+        onClick={handleClose}
       >
         <div
           className="
@@ -91,12 +98,14 @@ const Modal = ({
           md:w-4/6
           lg:w-3/6
           xl:w-2/5
-          my-6
-          mx-auto 
-          h-full 
+          h-full
+          mx-auto
           lg:h-auto
           md:h-auto
           "
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
         >
           {/*content*/}
           <div
@@ -104,14 +113,13 @@ const Modal = ({
             translate
             duration-200
             h-full
-            ${showModal ? 'translate-y-0' : 'translate-y-[-500px]'}
+            ${showModal ? 'translate-y-0' : 'translate-y-[-200px]'}
             ${showModal ? 'opacity-100' : 'opacity-0'}
           `}
           >
             <div
               className="
               translate
-              h-full
               lg:h-auto
               md:h-auto
               border-0 
@@ -122,8 +130,9 @@ const Modal = ({
               flex 
               flex-col 
               w-full 
+              h-full
               bg-white
-              dark:bg-gray-800
+              dark:bg-gray-700
               outline-none 
               focus:outline-none
             "
@@ -133,30 +142,29 @@ const Modal = ({
                 className="
                 flex 
                 items-center 
+                justify-between
                 p-6
                 rounded-t
-                justify-center
-                relative
                 border-b-[1px]
+                border-gray-300
+                dark:border-gray-500
                 "
               >
+                <div className="text-lg font-bold">{title}</div>
                 <button
                   className="
                     p-1
-                    border-0 
+                    border
+                    rounded-full
                     hover:opacity-70
-                    transition
-                    absolute
-                    left-9
                   "
                   onClick={handleClose}
                 >
                   <IoMdClose size={18} />
                 </button>
-                <div className="text-lg font-semibold">{title}</div>
               </div>
               {/*body*/}
-              <div className="relative p-6 flex-auto">{body}</div>
+              <div className="relative p-6">{body}</div>
               {/*footer*/}
               <div className="flex flex-col gap-2 p-6">
                 <div

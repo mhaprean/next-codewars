@@ -16,11 +16,10 @@ import Button from '../ui/Button';
 
 import { signIn } from 'next-auth/react';
 
-
 const RegisterModal = () => {
   const registerModal = useRegisterModal();
   const loginModal = useLoginModal();
-  
+
   const [isLoading, setIsLoading] = useState(false);
 
   const {
@@ -58,7 +57,6 @@ const RegisterModal = () => {
 
   const modalBody = (
     <div className="flex flex-col gap-4">
-      <h2 className="font-bold text-md">Register</h2>
       <Input id="email" label="Email" disabled={isLoading} register={register} errors={errors} required />
       <Input id="name" label="Name" disabled={isLoading} register={register} errors={errors} required />
       <Input id="password" label="Password" type="password" disabled={isLoading} register={register} errors={errors} required />
@@ -72,10 +70,10 @@ const RegisterModal = () => {
       <Button outline label="Continue with Github" icon={AiFillGithub} onClick={() => signIn('github')} />
       <div
         className="
-          text-neutral-500 
+          text-gray-600
+          dark:text-gray-400
           text-center 
-          mt-4 
-          font-light
+          mt-4
         "
       >
         <p>
@@ -83,7 +81,8 @@ const RegisterModal = () => {
           <span
             onClick={onToggle}
             className="
-              text-neutral-800
+            text-gray-600
+            dark:text-gray-400
               cursor-pointer 
               hover:underline
             "

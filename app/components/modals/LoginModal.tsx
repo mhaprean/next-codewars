@@ -14,7 +14,6 @@ import Input from '../ui/Input';
 import Button from '../ui/Button';
 import Modal from '../ui/Modal';
 
-
 const LoginModal = () => {
   const router = useRouter();
   const loginModal = useLoginModal();
@@ -60,7 +59,6 @@ const LoginModal = () => {
 
   const bodyContent = (
     <div className="flex flex-col gap-4">
-      <h2>Login to your account!</h2>
       <Input id="email" label="Email" disabled={isLoading} register={register} errors={errors} required />
       <Input id="password" label="Password" type="password" disabled={isLoading} register={register} errors={errors} required />
     </div>
@@ -73,14 +71,17 @@ const LoginModal = () => {
       <Button outline label="Continue with Github" icon={AiFillGithub} onClick={() => signIn('github')} />
       <div
         className="
-      text-neutral-500 text-center mt-4 font-light"
+        text-gray-600
+        dark:text-gray-400 
+        text-center mt-4"
       >
         <p>
-          First time using Airbnb?
+          New to CodeWars?
           <span
             onClick={onToggle}
             className="
-              text-neutral-800
+              text-gray-600
+              dark:text-gray-400
               cursor-pointer 
               hover:underline
             "
