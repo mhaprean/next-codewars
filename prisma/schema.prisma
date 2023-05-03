@@ -37,8 +37,26 @@ model Solution {
   createdAt   DateTime @default(now())
   User        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId      String   @db.ObjectId
+  Kata        Kata     @relation(fields: [kataId], references: [id], onDelete: Cascade)
+  kataId      String   @db.ObjectId
 
   @@map("solutions")
+}
+
+model Kata {
+  id           String     @id @default(auto()) @map("_id") @db.ObjectId
+  title        String
+  instructions String
+  initialCode  String
+  unitTests    String
+  difficulty   String
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  resolvedBy   String[]   @db.ObjectId
+  solutions    String[]   @db.ObjectId
+  Solution     Solution[]
+
+  @@map("katas")
 }
 
 model User {
@@ -48,9 +66,11 @@ model User {
   emailVerified  DateTime? @map("email_verified")
   image          String?
   hashedPassword String?
+  role           String    @default("user")
   createdAt      DateTime  @default(now())
   updatedAt      DateTime  @updatedAt
-  favoriteIds    String[]  @db.ObjectId
+  favoriteKatas  String[]  @db.ObjectId
+  solvedKatas    String[]  @db.ObjectId
 
   accounts  Account[]
   solutions Solution[]

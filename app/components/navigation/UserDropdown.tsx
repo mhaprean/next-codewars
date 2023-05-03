@@ -18,6 +18,7 @@ import { signOut } from 'next-auth/react';
 import { FiSettings } from 'react-icons/fi';
 import { FaUser } from 'react-icons/fa';
 import { AiOutlinePoweroff } from 'react-icons/ai';
+import { MdCreate } from 'react-icons/md';
 
 interface IUserDropdown {
   currentUser: ISafeUser;
@@ -46,6 +47,16 @@ const UserDropdown = ({ currentUser }: IUserDropdown) => {
             <span>View Profile</span>
           </div>
         </Link>
+
+        <Link href={`/create-kata`}>
+          <div className=" flex items-center gap-2 p-2 hover:bg-gray-200 dark:hover:bg-gray-500 duration-200 transition-all">
+            <div className="text-gray-500 dark:text-gray-300  rounded-md w-5 h-5">
+              <MdCreate className="w-full h-full" />
+            </div>
+            <span>Create Kata</span>
+          </div>
+        </Link>
+
         <Link href={'/account/edit'}>
           <div className=" flex items-center gap-2 p-2 hover:bg-gray-200 dark:hover:bg-gray-500 duration-200 transition-all">
             <div className="text-gray-500 dark:text-gray-300  rounded-md w-5 h-5">
