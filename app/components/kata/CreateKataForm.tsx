@@ -8,6 +8,7 @@ import Split from 'react-split';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
+import { IKata } from '../../types';
 
 const CreateKataForm = () => {
   const router = useRouter();
@@ -41,8 +42,10 @@ const CreateKataForm = () => {
       .then((response) => {
         console.log('response ', response);
 
+        const newKata: IKata = response.data;
+
         toast.success('Kata created!');
-        // router.push('/kata');
+        router.push('/kata/' + newKata.id);
         reset();
       })
       .catch(() => {

@@ -7,7 +7,7 @@ import CodeEditor from './CodeEditor';
 import { useState } from 'react';
 import { FaRegComments, FaUnlockAlt, FaNodeJs } from 'react-icons/fa';
 import { CgExpand } from 'react-icons/cg';
-import katas from '@/app/helpers/katas';
+import { toast } from 'react-hot-toast';
 
 import chai from 'chai';
 import KataHeader from './KataHeader';
@@ -15,6 +15,9 @@ import classNames from 'classnames';
 import KataOutput from './KataOutput';
 import FontsizeDropdown from './FontsizeDropdown';
 import { IKata } from '../../types';
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
+
 const assert = chai.assert;
 
 interface IPropsKataContent {
@@ -71,10 +74,14 @@ const dumpObjectIndented = (obj: any, indent: string) => {
     result += indent + "'" + property + "' : " + value + ',\n';
   }
   return result.replace(/,\n$/, '');
-}
+};
 
 const KataContent = ({ kata }: IPropsKataContent) => {
   const fullScreen = useFullScreenHandle();
+
+  const router = useRouter();
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const [activeTab, setActiveTab] = useState('instructions');
 
@@ -93,7 +100,8 @@ const KataContent = ({ kata }: IPropsKataContent) => {
     message: string;
   }
 
-  const runTests = () => {
+  const runTests = (): boolean => {
+    setActiveTab('output');
     try {
       setError({ actual: '', expected: '', message: '' });
       const fn = extractFunction(code);
@@ -101,9 +109,8 @@ const KataContent = ({ kata }: IPropsKataContent) => {
       // Run some basic tests to provide initial feedback to the user
       const testResult = runBasicTests(fn);
       setOutput(testResult);
+      return true;
     } catch (error) {
-      console.log('!!! error ', error);
-
       const err = error as unknown as IErr;
       let result = `
       ${err && err.message ? err.message : ''}
@@ -115,14 +122,15 @@ const KataContent = ({ kata }: IPropsKataContent) => {
       setOutput('');
 
       setError({ actual: err.actual, expected: err.expected, message: err.message });
+      return false;
     }
-    setActiveTab('output');
   };
 
   const runBasicTests = (solution: Function) => {
     let result = '';
     try {
       eval(tests);
+      result = 'Basic tests passed! Format the code as you wish and submit!'
     } catch (error) {
       const err = error as unknown as IErr;
       let errorMsg = 'Basic tests failed: ' + JSON.stringify((error as any).message);
@@ -139,6 +147,34 @@ const KataContent = ({ kata }: IPropsKataContent) => {
       fullScreen.exit();
     } else {
       fullScreen.enter();
+    }
+  };
+
+  const handleSubmitSolution = () => {
+    setIsLoading(true);
+    const canSubmit = runTests();
+
+    if (!canSubmit) {
+      setIsLoading(false);
+      return false;
+    }
+    try {
+      axios
+        .post('/api/solutions', { code: code, kataId: kata.id })
+        .then((response) => {
+          console.log('response ', response);
+
+          toast.success('Solution submitted!');
+          // router.push('/kata/' + kata.id + '/solutions');
+        })
+        .catch(() => {
+          toast.error('Something went wrong.');
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -252,7 +288,9 @@ const KataContent = ({ kata }: IPropsKataContent) => {
             >
               Test
             </button>
-            <button className="px-3 py-2 bg-primary rounded-md hover:opacity-80 text-gray-100">Submit</button>
+            <button onClick={handleSubmitSolution} className="px-3 py-2 bg-primary rounded-md hover:opacity-80 text-gray-100">
+              Submit
+            </button>
           </div>
         </div>
       </Split>

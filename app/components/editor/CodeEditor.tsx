@@ -24,7 +24,6 @@ const CodeEditor = ({ value, onChange, fontSize = '16px' }: IPropsCodeEditor) =>
   const appTheme = useAppTheme();
 
   const handleChange = (newValue: string) => {
-    console.log('change', newValue);
     onChange(newValue);
   };
 
