@@ -1,7 +1,9 @@
+import KataListLoader from '../components/kata/KataListLoader';
+
 const Loading = () => {
   return (
-    <div className="flex">
-      <p>loading kata listings page</p>
+    <div className="flex flex-col p-4 w-full max-w-5xl">
+      <KataListLoader />
     </div>
   );
 };

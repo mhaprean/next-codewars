@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { ISafeUser } from '../../types';
+import { IUser } from '../../types';
 import Avatar from '../ui/Avatar';
 import Button from '../ui/Button';
 import {
@@ -21,7 +21,7 @@ import { AiOutlinePoweroff } from 'react-icons/ai';
 import { MdCreate } from 'react-icons/md';
 
 interface IUserDropdown {
-  currentUser: ISafeUser;
+  currentUser: IUser;
 }
 
 const UserDropdown = ({ currentUser }: IUserDropdown) => {

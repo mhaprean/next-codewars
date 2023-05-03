@@ -4,12 +4,12 @@ import React from 'react';
 import Logo from '../Logo';
 import useRegisterModal from '../../hooks/useRegisterModal';
 import useLoginModal from '../../hooks/useLoginModal';
-import { ISafeUser } from '../../types';
+import { IUser } from '../../types';
 import ToggleThemeButton from './ToggleThemeButton';
 import UserDropdown from './UserDropdown';
 
 interface IPropsNavigation {
-  currentUser?: ISafeUser | null;
+  currentUser?: IUser | null;
 }
 const Navigation = ({ currentUser }: IPropsNavigation) => {
   const registerModal = useRegisterModal();

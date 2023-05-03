@@ -14,17 +14,8 @@ import KataHeader from './KataHeader';
 import classNames from 'classnames';
 import KataOutput from './KataOutput';
 import FontsizeDropdown from './FontsizeDropdown';
+import { IKata } from '../../types';
 const assert = chai.assert;
-
-interface IKata {
-  id: string;
-  title: string;
-  instructions: string;
-  initialCode: string;
-  unitTests: string;
-  difficulty: string;
-  resolvedBy: string[];
-}
 
 interface IPropsKataContent {
   kata: IKata;
