@@ -27,9 +27,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             <RegisterModal />
             <LoginModal />
             <Navigation currentUser={currentUser} />
+            <main className="flex min-h-screen  flex-col items-center justify-between pt-[60px]">{children}</main>
           </Providers>
         </ClientOnly>
-        <main className="flex min-h-screen  flex-col items-center justify-between pt-[60px]">{children}</main>
       </body>
     </html>
   );

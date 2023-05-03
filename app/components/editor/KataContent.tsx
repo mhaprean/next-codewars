@@ -47,6 +47,32 @@ const extractFunction = (code: string) => {
   return fn;
 };
 
+const dumpObjectIndented = (obj: any, indent: string) => {
+  var result = '';
+  if (indent == null) indent = '';
+
+  for (var property in obj) {
+    var value = obj[property];
+    if (typeof value == 'string') value = "'" + value + "'";
+    else if (typeof value == 'object') {
+      if (value instanceof Array) {
+        // Just let JS convert the Array to a string!
+        value = '[ ' + value + ' ]';
+      } else {
+        // Recursive dump
+        // (replace "  " by "\t" or something else if you prefer)
+        var od = dumpObjectIndented(value, indent + '  ');
+        // If you like { on the same line as the key
+        //value = "{\n" + od + "\n" + indent + "}";
+        // If you prefer { and } to be aligned
+        value = '\n' + indent + '{\n' + od + '\n' + indent + '}';
+      }
+    }
+    result += indent + "'" + property + "' : " + value + ',\n';
+  }
+  return result.replace(/,\n$/, '');
+}
+
 const KataContent = ({ kata }: IPropsKataContent) => {
   const fullScreen = useFullScreenHandle();
 
@@ -69,12 +95,12 @@ const KataContent = ({ kata }: IPropsKataContent) => {
 
   const runTests = () => {
     try {
+      setError({ actual: '', expected: '', message: '' });
       const fn = extractFunction(code);
 
       // Run some basic tests to provide initial feedback to the user
       const testResult = runBasicTests(fn);
       setOutput(testResult);
-      setError({ actual: '', expected: '', message: '' });
     } catch (error) {
       console.log('!!! error ', error);
 
@@ -99,11 +125,11 @@ const KataContent = ({ kata }: IPropsKataContent) => {
       eval(tests);
     } catch (error) {
       const err = error as unknown as IErr;
-      console.error(error);
-      console.log('DDDDDDD error ', error);
       let errorMsg = 'Basic tests failed: ' + JSON.stringify((error as any).message);
       setErrorMessage(errorMsg);
-      setError({ actual: err.actual, expected: err.expected, message: err.message });
+      let act = dumpObjectIndented(err.actual, '');
+      let exp = dumpObjectIndented(err.expected, '');
+      setError({ actual: act, expected: exp, message: err.message });
     }
     return result;
   };
@@ -168,7 +194,7 @@ const KataContent = ({ kata }: IPropsKataContent) => {
             )}
             {activeTab === 'instructions' && (
               <div className="max-w-3xl mx-auto">
-                <KataHeader />
+                <KataHeader kata={kata} />
                 <KataInstructions content={kata.instructions} />
               </div>
             )}

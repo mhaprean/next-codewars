@@ -63,7 +63,7 @@ const CreateKataForm = () => {
       </label>
       <textarea
         id="instructions"
-        className={`my-2 ${errors['instructions'] ? 'text-rose-500' : 'text-zinc-400'}`}
+        className={`my-2 border ${errors['instructions'] ? 'text-rose-500' : 'text-zinc-400'}`}
         disabled={isLoading}
         {...register('instructions', { required: true })}
         required
@@ -74,7 +74,7 @@ const CreateKataForm = () => {
       </label>
       <textarea
         id="initialCode"
-        className={`my-2 ${errors['initialCode'] ? 'text-rose-500' : 'text-zinc-400'}`}
+        className={`my-2 border ${errors['initialCode'] ? 'text-rose-500' : 'text-zinc-400'}`}
         disabled={isLoading}
         {...register('initialCode', { required: true })}
         required
@@ -85,7 +85,7 @@ const CreateKataForm = () => {
       </label>
       <textarea
         id="unitTests"
-        className={`my-2 ${errors['unitTests'] ? 'text-rose-500' : 'text-zinc-400'}`}
+        className={`my-2 border ${errors['unitTests'] ? 'text-rose-500' : 'text-zinc-400'}`}
         disabled={isLoading}
         {...register('unitTests', { required: true })}
         required
