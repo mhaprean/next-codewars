@@ -11,9 +11,9 @@ const Providers = ({ children }: IPropsProviders) => {
   return (
     <>
       <ThemeProvider attribute="class">
-      <ToasterProvider />
-      
-        {children}</ThemeProvider>
+        <ToasterProvider />
+        {children}
+      </ThemeProvider>
     </>
   );
 };

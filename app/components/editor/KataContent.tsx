@@ -6,7 +6,6 @@ import KataInstructions from './KataInstructions';
 import CodeEditor from './CodeEditor';
 import { useState } from 'react';
 import { FaRegComments, FaUnlockAlt, FaNodeJs } from 'react-icons/fa';
-import { FiSettings } from 'react-icons/fi';
 import { CgExpand } from 'react-icons/cg';
 import katas from '@/app/helpers/katas';
 
@@ -17,7 +16,19 @@ import KataOutput from './KataOutput';
 import FontsizeDropdown from './FontsizeDropdown';
 const assert = chai.assert;
 
-const { initialCode, testsCode, content2 } = katas;
+interface IKata {
+  id: string;
+  title: string;
+  instructions: string;
+  initialCode: string;
+  unitTests: string;
+  difficulty: string;
+  resolvedBy: string[];
+}
+
+interface IPropsKataContent {
+  kata: IKata;
+}
 
 const extractFunction = (code: string) => {
   const funcRegex = /const\s+(\w+)\s*=\s*function\s*\(([^)]*)\)\s*\{([\s\S]*)\};?/g;
@@ -45,18 +56,19 @@ const extractFunction = (code: string) => {
   return fn;
 };
 
-const KataContent = () => {
+const KataContent = ({ kata }: IPropsKataContent) => {
   const fullScreen = useFullScreenHandle();
 
   const [activeTab, setActiveTab] = useState('instructions');
 
   const [fontSize, setFontSize] = useState('16px');
 
-  const [code, setCode] = useState(initialCode);
-  const [tests, setTests] = useState(testsCode);
+  const [code, setCode] = useState(kata.initialCode);
+  const [tests, setTests] = useState(kata.unitTests);
 
   const [output, setOutput] = useState('');
   const [error, setError] = useState<IErr>({ actual: '', expected: '', message: '' });
+  const [errorMessage, setErrorMessage] = useState('');
 
   interface IErr {
     actual: string;
@@ -67,8 +79,6 @@ const KataContent = () => {
   const runTests = () => {
     try {
       const fn = extractFunction(code);
-      const result = fn(14);
-      console.log('!!! result ', result);
 
       // Run some basic tests to provide initial feedback to the user
       const testResult = runBasicTests(fn);
@@ -95,23 +105,13 @@ const KataContent = () => {
   const runBasicTests = (solution: Function) => {
     let result = '';
     try {
-      // Run some basic tests to provide initial feedback to the user
-      assert.strictEqual(solution(1), 'I');
-      assert.strictEqual(solution(4), 'IV');
-      assert.strictEqual(solution(9), 'IX');
-      assert.strictEqual(solution(10), 'X');
-      assert.strictEqual(solution(50), 'L');
-      assert.strictEqual(solution(100), 'C');
-      assert.strictEqual(solution(500), 'D');
-      assert.strictEqual(solution(1000), 'M');
-      result = 'Basic tests passed!';
-
       eval(tests);
     } catch (error) {
       const err = error as unknown as IErr;
       console.error(error);
       console.log('DDDDDDD error ', error);
-      result = 'Basic tests failed: ' + JSON.stringify((error as any).message);
+      let errorMsg = 'Basic tests failed: ' + JSON.stringify((error as any).message);
+      setErrorMessage(errorMsg);
       setError({ actual: err.actual, expected: err.expected, message: err.message });
     }
     return result;
@@ -134,7 +134,10 @@ const KataContent = () => {
         style={{ height: fullScreen.active ? '100vh' : `calc(100vh - 60px)` }}
       >
         <div className=" min-w-[250px]">
-          <div className="flex items-center h-[60px] flex-shrink-0 px-2 bg-gray-200 dark:bg-gray-900 pl-2 md:pl-4">
+          <div
+            className="flex items-center h-[60px] flex-shrink-0 px-2
+           bg-gray-200 dark:bg-gray-900 pl-2 md:pl-4"
+          >
             <div className="flex items-center gap-2">
               <button
                 onClick={() => setActiveTab('instructions')}
@@ -169,13 +172,13 @@ const KataContent = () => {
           <div className="bg-slate-100 dark:bg-gray-800 max-w-7xl mx-auto px-4 md:px-6 py-8 h-[calc(100%-60px)] overflow-y-auto ml-2 md:ml-4">
             {activeTab === 'output' && (
               <div className="max-w-3xl mx-auto">
-                <KataOutput error={error} message={output} />
+                <KataOutput error={error} message={output} errorMessage={errorMessage} />
               </div>
             )}
             {activeTab === 'instructions' && (
               <div className="max-w-3xl mx-auto">
                 <KataHeader />
-                <KataInstructions content={content2} />
+                <KataInstructions content={kata.instructions} />
               </div>
             )}
           </div>

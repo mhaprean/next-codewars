@@ -12,6 +12,7 @@ import 'ace-builds/src-noconflict/snippets/javascript';
 import 'ace-builds/src-noconflict/ext-static_highlight';
 import 'ace-builds/src-noconflict/ext-prompt';
 import 'ace-builds/src-noconflict/ext-inline_autocomplete';
+import useAppTheme from '../../hooks/useAppTheme';
 
 interface IPropsCodeEditor {
   value: string;
@@ -20,8 +21,7 @@ interface IPropsCodeEditor {
 }
 
 const CodeEditor = ({ value, onChange, fontSize = '16px' }: IPropsCodeEditor) => {
-  const { systemTheme, theme, setTheme } = useTheme();
-  const currentTheme = theme === 'system' ? systemTheme : theme;
+  const appTheme = useAppTheme();
 
   const handleChange = (newValue: string) => {
     console.log('change', newValue);
@@ -33,7 +33,7 @@ const CodeEditor = ({ value, onChange, fontSize = '16px' }: IPropsCodeEditor) =>
       className="w-full h-full overflow-y-auto"
       value={value}
       mode="javascript"
-      theme={currentTheme === 'dark' ? 'one_dark' : 'chrome'}
+      theme={appTheme.isDark ? 'one_dark' : 'chrome'}
       fontSize={fontSize}
       tabSize={2}
       onChange={handleChange}
@@ -44,7 +44,6 @@ const CodeEditor = ({ value, onChange, fontSize = '16px' }: IPropsCodeEditor) =>
         enableBasicAutocompletion: true,
         enableSnippets: true,
         enableLiveAutocompletion: true,
-        spellcheck: true,
         showPrintMargin: false,
       }}
     />
