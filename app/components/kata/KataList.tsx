@@ -1,5 +1,6 @@
 import { IKata } from '../../types';
 import Link from 'next/link';
+import KataDifficulty from './KataDifficulty';
 
 interface IPropsKataList {
   katas: IKata[];
@@ -13,7 +14,7 @@ const KataList = ({ katas }: IPropsKataList) => {
           <div className="border rounded-md p-2 bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-500">
             <p className="font-bold font-large text-gray-700 dark:text-gray-100">{kata.title}</p>
             <div className="py-4">
-              <span className="bg-orange-500/30 rounded-full px-3 py-1 text-orange-600 dark:text-orange-400">{kata.difficulty}</span>
+              <KataDifficulty difficulty={kata.difficulty} />
             </div>
           </div>
         </Link>

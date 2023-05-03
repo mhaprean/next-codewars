@@ -5,10 +5,14 @@ import { AiOutlineLike, AiFillLike } from 'react-icons/ai';
 
 import { RiShareForward2Fill } from 'react-icons/ri';
 import { useState } from 'react';
+import { IKata } from '../../types';
+import KataDifficulty from '../kata/KataDifficulty';
 
-interface IPropsKataHeader {}
+interface IPropsKataHeader {
+  kata: IKata;
+}
 
-const KataHeader = (props: IPropsKataHeader) => {
+const KataHeader = ({ kata }: IPropsKataHeader) => {
   const [fav, setFav] = useState(false);
   const [like, setLike] = useState(false);
 
@@ -22,15 +26,21 @@ const KataHeader = (props: IPropsKataHeader) => {
 
   return (
     <div className="w-full">
-      <h1 className="text-2xl font-bold">Integer to Roman</h1>
+      <h1 className="text-2xl font-bold">{kata.title}</h1>
       <div className="flex items-center gap-2 my-4">
-        <span className="bg-orange-500/30 rounded-full px-3 py-1 text-orange-600 dark:text-orange-400">Medium</span>
+        <KataDifficulty difficulty={kata.difficulty} />
 
-        <button onClick={toggleFavorite} className="text-orange-500 dark:text-yellow-400 hover:bg-gray-300 dark:hover:bg-gray-700 duration-200 transition-all rounded-md p-1 w-8 h-8">
+        <button
+          onClick={toggleFavorite}
+          className="text-orange-500 dark:text-yellow-400 hover:bg-gray-300 dark:hover:bg-gray-700 duration-200 transition-all rounded-md p-1 w-8 h-8"
+        >
           {fav ? <TiStarFullOutline className="w-full h-full" /> : <TiStarOutline className="w-full h-full" />}
         </button>
 
-        <button onClick={toggleLike} className="text-cyan-600 dark:text-cyan-400 hover:bg-gray-300 dark:hover:bg-gray-700 duration-200 transition-all rounded-md p-1 w-8 h-8">
+        <button
+          onClick={toggleLike}
+          className="text-cyan-600 dark:text-cyan-400 hover:bg-gray-300 dark:hover:bg-gray-700 duration-200 transition-all rounded-md p-1 w-8 h-8"
+        >
           {like ? <AiFillLike className="w-full h-full" /> : <AiOutlineLike className="w-full h-full" />}
         </button>
 
