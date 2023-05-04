@@ -14,4 +14,5 @@ export interface IKata extends Omit<Kata, 'createdAt' | 'updatedAt'> {
 export interface ISolution extends Omit<Solution, 'createdAt' | 'updatedAt'> {
   createdAt: string;
   updatedAt: string;
+  user: Partial<IUser>;
 }

@@ -28,5 +28,25 @@ export async function POST(request: Request) {
     },
   });
 
+  const updateKata = await prisma.kata.update({
+    where: {
+      id: kataId,
+    },
+    data: {
+      solutions: { connect: { id: solution.id } },
+    },
+  });
+
+  const updateUser = await prisma.user.update({
+    where: {
+      id: currentUser.id,
+    },
+    data: {
+      solvedKatas: {
+        set: currentUser.solvedKatas.includes(kataId) ? currentUser.solvedKatas : [...currentUser.solvedKatas, kataId],
+      },
+    },
+  });
+
   return NextResponse.json(solution);
 }
