@@ -1,10 +1,11 @@
 'use client';
 
 import { Highlight, themes } from 'prism-react-renderer';
-
+import { AiOutlineLike, AiFillLike } from 'react-icons/ai';
 import { ISolution } from '../../types';
 import useAppTheme from '../../hooks/useAppTheme';
 import Avatar from '../ui/Avatar';
+import { useState } from 'react';
 
 interface IPropsKataSolution {
   solution: ISolution;
@@ -12,6 +13,8 @@ interface IPropsKataSolution {
 
 const KataSolution = ({ solution }: IPropsKataSolution) => {
   const appTheme = useAppTheme();
+
+  const [like, setLike] = useState(false);
 
   return (
     <div className="bg-gray-200 dark:bg-gray-700 p-2 flex flex-col rounded-md">
@@ -31,6 +34,14 @@ const KataSolution = ({ solution }: IPropsKataSolution) => {
           </pre>
         )}
       </Highlight>
+      <div className="flex gap-2 p-2">
+        <button
+          onClick={() => {}}
+          className="text-cyan-600 dark:text-cyan-400 hover:bg-gray-300 dark:hover:bg-gray-700 duration-200 transition-all rounded-md p-1 w-8 h-8"
+        >
+          {like ? <AiFillLike className="w-full h-full" /> : <AiOutlineLike className="w-full h-full" />}
+        </button>
+      </div>
     </div>
   );
 };

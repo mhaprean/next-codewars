@@ -14,14 +14,16 @@ import KataHeader from './KataHeader';
 import classNames from 'classnames';
 import KataOutput from './KataOutput';
 import FontsizeDropdown from './FontsizeDropdown';
-import { IKata } from '../../types';
+import { IKata, IUser } from '../../types';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 const assert = chai.assert;
 
 interface IPropsKataContent {
   kata: IKata;
+  user: IUser | null;
 }
 
 const extractFunction = (code: string) => {
@@ -76,7 +78,7 @@ const dumpObjectIndented = (obj: any, indent: string) => {
   return result.replace(/,\n$/, '');
 };
 
-const KataContent = ({ kata }: IPropsKataContent) => {
+const KataContent = ({ kata, user }: IPropsKataContent) => {
   const fullScreen = useFullScreenHandle();
 
   const router = useRouter();
@@ -104,6 +106,7 @@ const KataContent = ({ kata }: IPropsKataContent) => {
     setActiveTab('output');
     try {
       setError({ actual: '', expected: '', message: '' });
+      setErrorMessage('');
       const fn = extractFunction(code);
 
       // Run some basic tests to provide initial feedback to the user
@@ -130,8 +133,9 @@ const KataContent = ({ kata }: IPropsKataContent) => {
     let result = '';
     try {
       eval(tests);
-      result = 'Basic tests passed! Format the code as you wish and submit!'
+      result = 'Basic tests passed! Format the code as you wish and submit!';
     } catch (error) {
+      console.error(error);
       const err = error as unknown as IErr;
       let errorMsg = 'Basic tests failed: ' + JSON.stringify((error as any).message);
       setErrorMessage(errorMsg);
@@ -230,7 +234,7 @@ const KataContent = ({ kata }: IPropsKataContent) => {
             )}
             {activeTab === 'instructions' && (
               <div className="max-w-3xl mx-auto">
-                <KataHeader kata={kata} />
+                <KataHeader kata={kata} user={user} />
                 <KataInstructions content={kata.instructions} />
               </div>
             )}
@@ -271,14 +275,16 @@ const KataContent = ({ kata }: IPropsKataContent) => {
               Disccusion
             </button>
 
-            <button
-              className="px-3 py-2 border 
+            <Link href={'/kata/' + kata.id + '/solutions'}>
+              <button
+                className="px-3 py-2 border 
             flex items-center gap-1 bg-primary/10 dark:bg-primary/5
             border-primary text-primary dark:text-gray-100 rounded-md hover:opacity-80"
-            >
-              <FaUnlockAlt className="w-5 h-5s text-primary" />
-              Unlock solutions
-            </button>
+              >
+                <FaUnlockAlt className="w-5 h-5s text-primary" />
+                Unlock solutions
+              </button>
+            </Link>
 
             <button
               onClick={runTests}

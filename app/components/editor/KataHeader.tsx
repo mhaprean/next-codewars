@@ -5,23 +5,41 @@ import { AiOutlineLike, AiFillLike } from 'react-icons/ai';
 
 import { RiShareForward2Fill } from 'react-icons/ri';
 import { useState } from 'react';
-import { IKata } from '../../types';
+import { IKata, IUser } from '../../types';
 import KataDifficulty from '../kata/KataDifficulty';
+import axios from 'axios';
+import toast from 'react-hot-toast';
 
 interface IPropsKataHeader {
   kata: IKata;
+  user: IUser | null;
 }
 
-const KataHeader = ({ kata }: IPropsKataHeader) => {
+const KataHeader = ({ kata, user }: IPropsKataHeader) => {
+  const isLiked = user && user.favoriteKatas.includes(kata.id) ? true : false;
   const [fav, setFav] = useState(false);
-  const [like, setLike] = useState(false);
+  const [like, setLike] = useState(isLiked);
 
   const toggleFavorite = () => {
     setFav((prev) => !prev);
   };
 
   const toggleLike = () => {
-    setLike((prev) => !prev);
+    const newLikedVal = !like;
+    setLike(newLikedVal);
+
+    axios
+      .post('/api/katas/like', { kataId: kata.id, liked: newLikedVal })
+      .then((response) => {
+        const newKata: IKata = response.data;
+
+        toast.success('Kata liked!');
+      })
+      .catch(() => {
+        toast.error('Something went wrong.');
+        setLike(like);
+      })
+      .finally(() => {});
   };
 
   return (

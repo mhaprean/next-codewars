@@ -9,8 +9,6 @@ interface IParams {
 export default async function KataSolutions({ params }: { params: IParams }) {
   const solutions = await getKataSolutions(params);
 
-  console.log('!!! solutions ', solutions);
-
   if (!solutions) {
     return <div className="font-bold p-6">No solutions available...</div>;
   }
@@ -20,10 +18,10 @@ export default async function KataSolutions({ params }: { params: IParams }) {
       <ClientOnly>
         <div className="flex flex-col gap-4">
           {solutions.map((solution, idx) => (
-            // <div key={solution.id}>{solution.id}</div>
-
             <KataSolution key={solution.id} solution={solution} />
           ))}
+
+          {solutions.length === 0 && <div className='font-bold mt-2 text-gray-600 dark:text-gray-300'>No solutions available</div>}
         </div>
       </ClientOnly>
     </div>
