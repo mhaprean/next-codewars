@@ -6,6 +6,7 @@ import { ISolution } from '../../types';
 import useAppTheme from '../../hooks/useAppTheme';
 import Avatar from '../ui/Avatar';
 import { useState } from 'react';
+import Link from 'next/link';
 
 interface IPropsKataSolution {
   solution: ISolution;
@@ -18,8 +19,13 @@ const KataSolution = ({ solution }: IPropsKataSolution) => {
 
   return (
     <div className="bg-gray-200 dark:bg-gray-700 p-2 flex flex-col rounded-md">
-      <div className="flex items-center my-2 mb-4 gap-2">
-        <Avatar src={solution.user.image} /> <p className="font-bold text-base text-gray-600 dark:text-gray-300">{solution.user.name}</p>
+      <div className="flex items-center my-2 mb-4 gap-2 flex-grow-0">
+        <Link href={'/user/' + solution.userId}>
+          <Avatar src={solution.user.image} />
+        </Link>
+        <Link href={'/user/' + solution.userId}>
+          <p className="font-bold text-base text-gray-600 dark:text-gray-300 hover:text-gray-500 dark:hover:text-white">{solution.user.name}</p>
+        </Link>
       </div>
       <Highlight theme={appTheme.isDark ? themes.vsDark : themes.vsLight} code={solution.code} language="javascript">
         {({ className, style, tokens, getLineProps, getTokenProps }) => (

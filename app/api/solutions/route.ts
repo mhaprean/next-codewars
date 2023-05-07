@@ -20,6 +20,16 @@ export async function POST(request: Request) {
     }
   });
 
+  const kata = await prisma.kata.findUnique({
+    where: {
+      id: kataId,
+    },
+  });
+
+  if (!kata) {
+    return NextResponse.error();
+  }
+
   const solution = await prisma.solution.create({
     data: {
       code,
@@ -28,12 +38,15 @@ export async function POST(request: Request) {
     },
   });
 
+  const newKataResolvedBy = [...kata.resolvedBy, currentUser.id];
+
   const updateKata = await prisma.kata.update({
     where: {
       id: kataId,
     },
     data: {
       solutions: { connect: { id: solution.id } },
+      resolvedBy: newKataResolvedBy,
     },
   });
 

@@ -169,7 +169,7 @@ const KataContent = ({ kata, user }: IPropsKataContent) => {
           console.log('response ', response);
 
           toast.success('Solution submitted!');
-          // router.push('/kata/' + kata.id + '/solutions');
+          router.push('/kata/' + kata.id + '/solutions');
         })
         .catch(() => {
           toast.error('Something went wrong.');
