@@ -12,6 +12,9 @@ export default async function getKataSolutions(params: IParams) {
       where: {
         kataId,
       },
+      orderBy: {
+        createdAt: 'desc',
+      },
       include: {
         user: {
           select: {
@@ -29,7 +32,7 @@ export default async function getKataSolutions(params: IParams) {
 
     return solutions.map((solution, idx) => ({
       ...solution,
-      createdAt: solution.createdAt.toString(),
+      createdAt: solution.createdAt.toISOString().split('T')[0],
       updatedAt: solution.updatedAt.toString(),
     }));
   } catch (error: any) {

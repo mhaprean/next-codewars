@@ -7,6 +7,7 @@ import useAppTheme from '../../hooks/useAppTheme';
 import Avatar from '../ui/Avatar';
 import { useState } from 'react';
 import Link from 'next/link';
+import ChipInfo from '../kata/ChipInfo';
 
 interface IPropsKataSolution {
   solution: ISolution;
@@ -40,13 +41,16 @@ const KataSolution = ({ solution }: IPropsKataSolution) => {
           </pre>
         )}
       </Highlight>
-      <div className="flex gap-2 p-2">
+      <div className="flex items-center gap-2 p-2">
         <button
           onClick={() => {}}
           className="text-cyan-600 dark:text-cyan-400 hover:bg-gray-300 dark:hover:bg-gray-700 duration-200 transition-all rounded-md p-1 w-8 h-8"
         >
           {like ? <AiFillLike className="w-full h-full" /> : <AiOutlineLike className="w-full h-full" />}
         </button>
+
+        <ChipInfo text={solution.createdAt} />
+
       </div>
     </div>
   );

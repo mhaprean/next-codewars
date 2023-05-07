@@ -2,7 +2,11 @@ import prisma from '@/app/libs/prismadb';
 
 export default async function getKatas() {
   try {
-    const katas = await prisma.kata.findMany({});
+    const katas = await prisma.kata.findMany({
+      orderBy: {
+        createdAt: 'desc',
+      },
+    });
 
     const safeKatas = katas.map((kata) => ({
       ...kata,
