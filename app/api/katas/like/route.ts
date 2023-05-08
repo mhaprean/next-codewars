@@ -7,7 +7,7 @@ export async function POST(request: Request) {
   const currentUser = await getCurrentUser();
 
   if (!currentUser) {
-    return NextResponse.error();
+    return NextResponse.json({ message: 'You must login to like a kata' }, { status: 401 });
   }
 
   const body = await request.json();
@@ -16,7 +16,7 @@ export async function POST(request: Request) {
 
   Object.keys(body).forEach((value: any) => {
     if (!body[value]) {
-      NextResponse.error();
+      return NextResponse.json({ message: `${value} should not be empty` }, { status: 400 });
     }
   });
 
@@ -27,7 +27,7 @@ export async function POST(request: Request) {
   });
 
   if (!kata) {
-    return NextResponse.error();
+    return NextResponse.json({ message: 'Wrong kata id' }, { status: 404 });
   }
 
   const newKataLikedBy = !liked
