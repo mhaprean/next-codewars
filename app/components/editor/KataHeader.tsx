@@ -17,11 +17,34 @@ interface IPropsKataHeader {
 
 const KataHeader = ({ kata, user }: IPropsKataHeader) => {
   const isLiked = user && user.favoriteKatas.includes(kata.id) ? true : false;
-  const [fav, setFav] = useState(false);
+  const isBookmarked = user && user.bookmarkedKatas.includes(kata.id) ? true : false;
+  const [bookmarked, setBookmarked] = useState(isBookmarked);
   const [like, setLike] = useState(isLiked);
 
-  const toggleFavorite = () => {
-    setFav((prev) => !prev);
+  const toggleBookmark = () => {
+    const newBookmarkedVal = !bookmarked;
+
+    setBookmarked(newBookmarkedVal);
+
+    axios
+      .post('/api/katas/bookmark', { kataId: kata.id, bookmarked: newBookmarkedVal })
+      .then((response) => {
+        const newKata: IKata = response.data;
+
+
+        if (newBookmarkedVal) {
+          toast.success('Kata bookmarked!');
+        } else {
+          toast.success('Kata removed from bookmarks');
+        }
+
+        
+      })
+      .catch(() => {
+        toast.error('Error bookmarking the kata.');
+        setBookmarked(bookmarked);
+      })
+      .finally(() => {});
   };
 
   const toggleLike = () => {
@@ -33,7 +56,13 @@ const KataHeader = ({ kata, user }: IPropsKataHeader) => {
       .then((response) => {
         const newKata: IKata = response.data;
 
-        toast.success('Kata liked!');
+        if (newLikedVal) {
+          toast.success('Kata liked!');
+        } else {
+          toast.success('Kata like removed.');
+        }
+
+        
       })
       .catch(() => {
         toast.error('Something went wrong.');
@@ -49,10 +78,10 @@ const KataHeader = ({ kata, user }: IPropsKataHeader) => {
         <KataDifficulty difficulty={kata.difficulty} />
 
         <button
-          onClick={toggleFavorite}
+          onClick={toggleBookmark}
           className="text-orange-500 dark:text-yellow-400 hover:bg-gray-300 dark:hover:bg-gray-700 duration-200 transition-all rounded-md p-1 w-8 h-8"
         >
-          {fav ? <TiStarFullOutline className="w-full h-full" /> : <TiStarOutline className="w-full h-full" />}
+          {bookmarked ? <TiStarFullOutline className="w-full h-full" /> : <TiStarOutline className="w-full h-full" />}
         </button>
 
         <button

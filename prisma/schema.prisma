@@ -65,17 +65,18 @@ model Kata {
 }
 
 model User {
-  id             String    @id @default(auto()) @map("_id") @db.ObjectId
-  name           String
-  email          String?   @unique
-  emailVerified  DateTime? @map("email_verified")
-  image          String?
-  hashedPassword String?
-  role           String    @default("user")
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime  @updatedAt
-  favoriteKatas  String[]  @db.ObjectId
-  solvedKatas    String[]  @db.ObjectId
+  id              String    @id @default(auto()) @map("_id") @db.ObjectId
+  name            String
+  email           String?   @unique
+  emailVerified   DateTime? @map("email_verified")
+  image           String?
+  hashedPassword  String?
+  role            String    @default("user")
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  favoriteKatas   String[]  @db.ObjectId
+  solvedKatas     String[]  @db.ObjectId
+  bookmarkedKatas String[]  @db.ObjectId
 
   accounts  Account[]
   solutions Solution[]
