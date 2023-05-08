@@ -16,7 +16,7 @@ Recreate the basic functionalities of codewars using the following:
 - Zustand
 - React Ace (code editor)
 - Chai
-- Cloduinary (for image upload)
+- Cloudinary (for image upload)
 
 ### DEMO
 
