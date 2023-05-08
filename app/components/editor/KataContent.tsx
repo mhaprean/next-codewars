@@ -19,6 +19,8 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
+import useLoginModal from '@/app/hooks/useLoginModal';
+
 const assert = chai.assert;
 
 interface IPropsKataContent {
@@ -82,6 +84,8 @@ const KataContent = ({ kata, user }: IPropsKataContent) => {
   const fullScreen = useFullScreenHandle();
 
   const router = useRouter();
+
+  const loginModal = useLoginModal();
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -155,6 +159,10 @@ const KataContent = ({ kata, user }: IPropsKataContent) => {
   };
 
   const handleSubmitSolution = () => {
+    if (!user) {
+      loginModal.onOpen();
+      return;
+    }
     setIsLoading(true);
     const canSubmit = runTests();
 
@@ -234,7 +242,7 @@ const KataContent = ({ kata, user }: IPropsKataContent) => {
             )}
             {activeTab === 'instructions' && (
               <div className="max-w-3xl mx-auto">
-                <KataHeader kata={kata} user={user} />
+                <KataHeader kata={kata} user={user} openLogin={loginModal.onOpen} />
                 <KataInstructions content={kata.instructions} />
               </div>
             )}

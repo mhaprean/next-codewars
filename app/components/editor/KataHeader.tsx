@@ -13,15 +13,20 @@ import toast from 'react-hot-toast';
 interface IPropsKataHeader {
   kata: IKata;
   user: IUser | null;
+  openLogin: () => void;
 }
 
-const KataHeader = ({ kata, user }: IPropsKataHeader) => {
+const KataHeader = ({ kata, user, openLogin }: IPropsKataHeader) => {
   const isLiked = user && user.favoriteKatas.includes(kata.id) ? true : false;
   const isBookmarked = user && user.bookmarkedKatas.includes(kata.id) ? true : false;
   const [bookmarked, setBookmarked] = useState(isBookmarked);
   const [like, setLike] = useState(isLiked);
 
   const toggleBookmark = () => {
+    if (!user) {
+      openLogin();
+      return;
+    }
     const newBookmarkedVal = !bookmarked;
 
     setBookmarked(newBookmarkedVal);
@@ -31,14 +36,11 @@ const KataHeader = ({ kata, user }: IPropsKataHeader) => {
       .then((response) => {
         const newKata: IKata = response.data;
 
-
         if (newBookmarkedVal) {
           toast.success('Kata bookmarked!');
         } else {
           toast.success('Kata removed from bookmarks');
         }
-
-        
       })
       .catch(() => {
         toast.error('Error bookmarking the kata.');
@@ -48,6 +50,11 @@ const KataHeader = ({ kata, user }: IPropsKataHeader) => {
   };
 
   const toggleLike = () => {
+    if (!user) {
+      openLogin();
+      return;
+    }
+
     const newLikedVal = !like;
     setLike(newLikedVal);
 
@@ -61,8 +68,6 @@ const KataHeader = ({ kata, user }: IPropsKataHeader) => {
         } else {
           toast.success('Kata like removed.');
         }
-
-        
       })
       .catch(() => {
         toast.error('Something went wrong.');
