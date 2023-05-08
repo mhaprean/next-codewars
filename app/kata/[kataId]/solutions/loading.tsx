@@ -1,7 +1,11 @@
+import SoultionListLoader from "../../../components/solution/SoultionListLoader";
 
 const Loading = () => {
   return (
-    <div>solutions loading...</div>
+    <div className="flex flex-col p-4 w-full max-w-5xl">
+      
+      <SoultionListLoader />
+    </div>
   );
 };
 
