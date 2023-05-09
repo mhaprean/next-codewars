@@ -9,6 +9,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import toast from 'react-hot-toast';
 import axios from 'axios';
+import { timeAgo } from '../../helpers/timeFormatter';
 
 interface IPropsKataSolution {
   solution: ISolution;
@@ -81,7 +82,7 @@ const KataSolution = ({ solution, userId, openLogin }: IPropsKataSolution) => {
       <div className="flex items-center gap-2 p-2">
         <button
           onClick={toggleLike}
-          className="text-cyan-600 dark:text-cyan-400 hover:bg-gray-300 dark:hover:bg-gray-700 duration-200 transition-all rounded-md p-1 w-8 h-8"
+          className="text-orange-500 dark:text-yellow-400 hover:bg-gray-300 dark:hover:bg-gray-700 duration-200 transition-all rounded-md p-1 w-8 h-8"
         >
           {like ? <AiFillLike className="w-full h-full" /> : <AiOutlineLike className="w-full h-full" />}
         </button>
@@ -91,7 +92,7 @@ const KataSolution = ({ solution, userId, openLogin }: IPropsKataSolution) => {
         </div>
 
         <div className="rounded-full py-1 px-2 text-sm font-semibold bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-300">
-          {solution.createdAt}
+          {timeAgo(solution.createdAt)}
         </div>
       </div>
     </div>

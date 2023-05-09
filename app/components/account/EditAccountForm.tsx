@@ -86,9 +86,9 @@ const EditAccountForm = ({ user }: IPropsEditAccountForm) => {
 
       <input type="file" name="image" id="image" className="border p-4 rounded-md" onChange={handleFileChange} />
 
-      <div className="relative rounded-md overflow-hidden w-[100px] h-[100px]">
+      <div className="relative rounded-full overflow-hidden w-[100px] h-[100px]">
         <Image
-          className="absolute inset-0 object-cover w-full h-full"
+          className="absolute inset-0 object-cover w-full h-full top-0 left-0"
           height="100"
           width="100"
           alt="Avatar"

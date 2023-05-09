@@ -19,14 +19,21 @@ import { FiSettings } from 'react-icons/fi';
 import { FaUser } from 'react-icons/fa';
 import { AiOutlinePoweroff } from 'react-icons/ai';
 import { MdCreate } from 'react-icons/md';
+import { useState } from 'react';
 
 interface IUserDropdown {
   currentUser: IUser;
 }
 
 const UserDropdown = ({ currentUser }: IUserDropdown) => {
+  const [open, setOpen] = useState(false);
+
+  const handleClick = () => {
+    setOpen(false);
+  }
+
   return (
-    <DropdownMenu>
+    <DropdownMenu open={open} onOpenChange={(val) => setOpen(val)} >
       <DropdownMenuTrigger asChild>
         <button className="hover:opacity-80 transition-all duration-100 rounded-full">
           <Avatar src={currentUser.image} />
@@ -39,7 +46,7 @@ const UserDropdown = ({ currentUser }: IUserDropdown) => {
 
         <DropdownMenuSeparator className="bg-gray-200 dark:bg-gray-500" />
 
-        <Link href={`/user/${currentUser.id}`}>
+        <Link href={`/user/${currentUser.id}`} onClick={handleClick}>
           <div className=" flex items-center gap-2 p-2 hover:bg-gray-200 dark:hover:bg-gray-500 duration-200 transition-all">
             <div className="text-gray-500 dark:text-gray-300  rounded-md w-5 h-5">
               <FaUser className="w-full h-full" />
@@ -48,7 +55,7 @@ const UserDropdown = ({ currentUser }: IUserDropdown) => {
           </div>
         </Link>
 
-        <Link href={`/create-kata`}>
+        <Link href={`/create-kata`} onClick={handleClick}>
           <div className=" flex items-center gap-2 p-2 hover:bg-gray-200 dark:hover:bg-gray-500 duration-200 transition-all">
             <div className="text-gray-500 dark:text-gray-300  rounded-md w-5 h-5">
               <MdCreate className="w-full h-full" />
@@ -57,7 +64,7 @@ const UserDropdown = ({ currentUser }: IUserDropdown) => {
           </div>
         </Link>
 
-        <Link href={'/account/edit'}>
+        <Link href={'/account/edit'} onClick={handleClick}>
           <div className=" flex items-center gap-2 p-2 hover:bg-gray-200 dark:hover:bg-gray-500 duration-200 transition-all">
             <div className="text-gray-500 dark:text-gray-300  rounded-md w-5 h-5">
               <FiSettings className="w-full h-full" />

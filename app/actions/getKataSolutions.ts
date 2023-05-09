@@ -32,7 +32,7 @@ export default async function getKataSolutions(params: IParams) {
 
     return solutions.map((solution, idx) => ({
       ...solution,
-      createdAt: solution.createdAt.toISOString().split('T')[0],
+      createdAt: solution.createdAt.toString(),
       updatedAt: solution.updatedAt.toString(),
     }));
   } catch (error: any) {
