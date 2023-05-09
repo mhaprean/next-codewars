@@ -86,13 +86,16 @@ const EditAccountForm = ({ user }: IPropsEditAccountForm) => {
 
       <input type="file" name="image" id="image" className="border p-4 rounded-md" onChange={handleFileChange} />
 
-      <Image
-        className="rounded-md"
-        height="100"
-        width="100"
-        alt="Avatar"
-        src={typeof imagePreview === 'string' ? imagePreview : user.image || '/avatar-placeholder.jpg'}
-      />
+      <div className="relative rounded-md overflow-hidden w-[100px] h-[100px]">
+        <Image
+          className="absolute inset-0 object-cover w-full h-full"
+          height="30"
+          width="30"
+          alt="Avatar"
+          src={typeof imagePreview === 'string' ? imagePreview : user.image || '/avatar-placeholder.jpg'}
+        />
+        ;
+      </div>
 
       <button disabled={isLoading} className="bg-primary text-white p-4 rounded-md" onClick={handleSubmit}>
         {isLoading ? 'Loading... ' : 'Update account'}

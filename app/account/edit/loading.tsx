@@ -1,6 +1,9 @@
-
+import EditAccountLoader from '../../components/account/EditAccountLoader';
 
 export default function LoadingEditAccountPage() {
-
-  return <div>Loading edit account...</div>
+  return (
+    <div>
+      <EditAccountLoader />
+    </div>
+  );
 }

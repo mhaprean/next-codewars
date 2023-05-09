@@ -16,7 +16,7 @@ export default function Home() {
        bg-gradient-to-br from-blue-950 via-indigo-900 to-rose-900
        dark:from-blue-50 dark:via-indigo-200 dark:to-rose-400
        text-transparent bg-clip-text
-       sm:text-6xl sm:tracking-tight lg:text-[4rem] xl:text-[6rem] xl:tracking-tight 2xl:text-[6.5rem]`}
+       sm:text-6xl sm:tracking-tight lg:text-[4rem] xl:text-[6rem] xl:tracking-tight`}
         >
           Welcome to Codewars. Improve your coding skills and programming thinking!
         </h1>
