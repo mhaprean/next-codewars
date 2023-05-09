@@ -2,21 +2,56 @@
 
 import { Highlight, themes } from 'prism-react-renderer';
 import { AiOutlineLike, AiFillLike } from 'react-icons/ai';
-import { ISolution } from '../../types';
+import { ISolution, IUser } from '../../types';
 import useAppTheme from '../../hooks/useAppTheme';
 import Avatar from '../ui/Avatar';
 import { useState } from 'react';
 import Link from 'next/link';
-import ChipInfo from '../kata/ChipInfo';
+import toast from 'react-hot-toast';
+import axios from 'axios';
 
 interface IPropsKataSolution {
   solution: ISolution;
+  userId: string;
+  openLogin: () => void;
 }
 
-const KataSolution = ({ solution }: IPropsKataSolution) => {
+const KataSolution = ({ solution, userId, openLogin }: IPropsKataSolution) => {
   const appTheme = useAppTheme();
 
-  const [like, setLike] = useState(false);
+  const [like, setLike] = useState(solution.likedBy.includes(userId));
+
+  const [solutionLikes, setSolutionLikes] = useState(solution.likedBy);
+
+  const toggleLike = () => {
+    if (!userId) {
+      openLogin();
+      return;
+    }
+
+    const newLikedVal = !like;
+    setLike(newLikedVal);
+
+    const newSolutionLikes = newLikedVal ? [...solutionLikes, userId] : solutionLikes.filter((solution) => solution !== userId);
+    setSolutionLikes(newSolutionLikes);
+
+    axios
+      .post('/api/solutions/like', { solutionId: solution.id, liked: newLikedVal })
+      .then((response) => {
+        const newSolution: ISolution = response.data;
+
+        if (newLikedVal) {
+          toast.success('Solution liked!');
+        } else {
+          toast.success('Solution like removed.');
+        }
+      })
+      .catch(() => {
+        toast.error('Something went wrong.');
+        setLike(like);
+      })
+      .finally(() => {});
+  };
 
   return (
     <div className="bg-gray-200 dark:bg-gray-700 p-2 flex flex-col rounded-md">
@@ -25,7 +60,9 @@ const KataSolution = ({ solution }: IPropsKataSolution) => {
           <Avatar src={solution.user.image} />
         </Link>
         <Link href={'/user/' + solution.userId}>
-          <p className="font-bold text-base text-gray-600 dark:text-gray-300 hover:text-gray-500 dark:hover:text-white">{solution.user.name}</p>
+          <p className="font-bold text-base text-gray-600 dark:text-gray-300 hover:text-gray-500 dark:hover:text-white">
+            {solution.user.name}
+          </p>
         </Link>
       </div>
       <Highlight theme={appTheme.isDark ? themes.vsDark : themes.vsLight} code={solution.code} language="javascript">
@@ -43,14 +80,19 @@ const KataSolution = ({ solution }: IPropsKataSolution) => {
       </Highlight>
       <div className="flex items-center gap-2 p-2">
         <button
-          onClick={() => {}}
+          onClick={toggleLike}
           className="text-cyan-600 dark:text-cyan-400 hover:bg-gray-300 dark:hover:bg-gray-700 duration-200 transition-all rounded-md p-1 w-8 h-8"
         >
           {like ? <AiFillLike className="w-full h-full" /> : <AiOutlineLike className="w-full h-full" />}
         </button>
 
-        <ChipInfo text={solution.createdAt} />
+        <div className="rounded-full py-1 px-2 text-sm font-semibold bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-300">
+          <span>{solutionLikes.length === 1 ? '1 like' : `${solutionLikes.length} likes`}</span>
+        </div>
 
+        <div className="rounded-full py-1 px-2 text-sm font-semibold bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-300">
+          {solution.createdAt}
+        </div>
       </div>
     </div>
   );

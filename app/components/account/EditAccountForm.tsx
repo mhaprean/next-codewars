@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { IUser } from '../types';
+import { IUser } from '../../types';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import toast from 'react-hot-toast';
@@ -89,8 +89,8 @@ const EditAccountForm = ({ user }: IPropsEditAccountForm) => {
       <div className="relative rounded-md overflow-hidden w-[100px] h-[100px]">
         <Image
           className="absolute inset-0 object-cover w-full h-full"
-          height="30"
-          width="30"
+          height="100"
+          width="100"
           alt="Avatar"
           src={typeof imagePreview === 'string' ? imagePreview : user.image || '/avatar-placeholder.jpg'}
         />

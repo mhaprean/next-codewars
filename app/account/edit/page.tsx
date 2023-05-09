@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import getCurrentUser from '../../actions/getCurrentUser';
-import EditAccountForm from '../../components/EditAccountForm';
+import EditAccountForm from '../../components/account/EditAccountForm';
 
 export default async function EditAccountPage() {
   const currentUser = await getCurrentUser();
